@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 from labyrinth_game.utils import describe_current_room
+from labyrinth_game.constants import COMMAND_ALIASES
 from labyrinth_game.utils import solve_puzzle, attempt_open_treasure
+from labyrinth_game.utils import show_help, show_map
 from labyrinth_game.player_actions import (
 	get_input,
 	show_inventory,
@@ -12,6 +14,11 @@ from labyrinth_game.player_actions import (
 
 
 def process_command(game_state: dict, command: str) -> None:
+	command = command.strip().lower()
+	
+	if command in COMMAND_ALIASES:
+		command = COMMAND_ALIASES[command]
+	
 	parts = command.split()
 
 	if not parts:
@@ -45,6 +52,12 @@ def process_command(game_state: dict, command: str) -> None:
 		case "inventory":
  			show_inventory(game_state)
 
+		case "help":
+			show_help()
+
+		case "map":
+			show_map(game_state)
+
 		case "solve":
 			current_room = game_state["current_room"]
 			if current_room == "treasure_room":
@@ -64,11 +77,13 @@ def main() -> None:
 	game_state = {
 		"player_inventory": [],
 		"current_room": "entrance",
+		"visited_rooms": {"entrance"},
 		"game_over": False,
 		"steps_taken": 0,
 	}
 
 	print("Добро пожаловать в Лабиринт сокровищ!")
+	print("Введите 'help', чтобы увидеть список доступных команд.")
 
 	describe_current_room(game_state)
 

@@ -34,6 +34,7 @@ def move_player(game_state: dict, direction: str) -> None:
     new_room = exits[direction]
     game_state["current_room"] = new_room
     game_state["steps_taken"] += 1
+    game_state["visited_rooms"].add(new_room)
 
     # Импорт здесь, чтобы не было циклических импортов
     from labyrinth_game.utils import describe_current_room

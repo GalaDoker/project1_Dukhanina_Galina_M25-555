@@ -1,5 +1,11 @@
 from labyrinth_game.constants import ROOMS
+from labyrinth_game.constants import COMMANDS, COMMAND_ALIASES
 
+def show_map(game_state: dict) -> None:
+    print("Изученные комнаты:")
+    for room in game_state["visited_rooms"]:
+        exits = ", ".join(ROOMS[room]["exits"].keys())
+        print(f"- {room} (выходы: {exits})")
 
 def describe_current_room(game_state: dict) -> None:
     room_name = game_state["current_room"]
@@ -84,3 +90,22 @@ def attempt_open_treasure(game_state: dict) -> None:
         game_state["game_over"] = True
     else:
         print("Код неверный.")
+
+
+def show_help() -> None:
+    print("Доступные команды:")
+
+    aliases_by_command: dict[str, list[str]] = {}
+
+    for alias, full_command in COMMAND_ALIASES.items():
+        base_command = full_command.split()[0]
+        aliases_by_command.setdefault(base_command, []).append(alias)
+
+    for command, description in COMMANDS.items():
+        aliases = aliases_by_command.get(command, [])
+        if aliases:
+            alias_text = f" ({'/'.join(sorted(aliases))})"
+        else:
+            alias_text = ""
+
+        print(f"- {command}{alias_text}: {description}")
