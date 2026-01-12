@@ -30,42 +30,34 @@ def describe_current_room(game_state: dict) -> None:
 def solve_puzzle(game_state: dict) -> None:
     current_room = game_state["current_room"]
     room = ROOMS[current_room]
-    puzzle = room.get("puzzle")
 
+    puzzle = room.get("puzzle")
     if puzzle is None:
         print("Загадок здесь нет.")
         return
 
-    question, correct_answer = puzzle
-
-    print(question)
+    print(puzzle["question"])
     user_answer = input("Ваш ответ: ").strip().lower()
 
-    correct_answer = correct_answer.lower()
-    acceptable_answers = {correct_answer}
+    correct_answers = [a.lower() for a in puzzle["answers"]]
 
-    if correct_answer == "10":
-        acceptable_answers.add("десять")
+    if user_answer in correct_answers:
+        print("Верно! Загадка решена.")
 
-    if user_answer in acceptable_answers:
-        print("Верно! Вы решили загадку.")
+        reward = puzzle.get("reward")
+        if reward:
+            if reward not in game_state["player_inventory"]:
+                game_state["player_inventory"].append(reward)
+                print(f"Вы получили награду: {reward}")
 
         room["puzzle"] = None
-
-        if current_room == "hall":
-            if "rusty_key" not in game_state["player_inventory"]:
-                print("В награду вы получаете старый ключ.")
-                game_state["player_inventory"].append("rusty_key")
-
-        elif current_room == "library":
-            print("Вы находите древний свиток.")
-            game_state["player_inventory"].append("ancient_scroll")
 
     else:
         print("Неверно. Попробуйте снова.")
 
         if current_room == "trap_room":
             trigger_trap(game_state)
+
 
 
 def attempt_open_treasure(game_state: dict) -> None:
