@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "project1-dukhanina-galina-m25-555"
 version = "0.1.0"
-description = ""
+description = "Игра с лабиринтом, загадками и приключениями"
 authors = ["Galina Dukhanina <galina@example.com>"]
 readme = "README.md"
 packages = [
