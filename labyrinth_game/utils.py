@@ -1,5 +1,6 @@
 from labyrinth_game.constants import ROOMS
 from labyrinth_game.constants import COMMANDS, COMMAND_ALIASES
+import math
 
 def show_map(game_state: dict) -> None:
     print("Изученные комнаты:")
@@ -109,3 +110,51 @@ def show_help() -> None:
             alias_text = ""
 
         print(f"- {command}{alias_text}: {description}")
+
+def pseudo_random(seed: int, modulo: int) -> int:
+    if modulo <= 0:
+        return 0
+
+    x = math.sin(seed * 12.9898) * 43758.5453
+    fractional_part = x - math.floor(x)
+    return int(fractional_part * modulo)
+
+def random_event(game_state: dict) -> None:
+    chance = pseudo_random(game_state["steps_taken"], 10)
+    if chance != 0:
+        return
+
+    event_type = pseudo_random(game_state["steps_taken"], 3)
+    current_room = game_state["current_room"]
+    room = ROOMS[current_room]
+
+    if event_type == 0:
+        print("Вы заметили на полу монетку.")
+        room["items"].append("coin")
+
+    elif event_type == 1:
+        print("Вы слышите странный шорох поблизости...")
+        if "sword" in game_state["player_inventory"]:
+            print("Вы сжимаете меч, и существо отступает.")
+
+    elif event_type == 2:
+        if current_room == "trap_room" and "torch" not in game_state["player_inventory"]:
+            print("Вы не заметили опасность в темноте!")
+            trigger_trap(game_state)
+
+def trigger_trap(game_state: dict) -> None:
+    print("Ловушка активирована! Пол начал дрожать...")
+
+    inventory = game_state["player_inventory"]
+
+    if inventory:
+        index = pseudo_random(game_state["steps_taken"], len(inventory))
+        lost_item = inventory.pop(index)
+        print(f"Вы потеряли предмет: {lost_item}")
+    else:
+        damage = pseudo_random(game_state["steps_taken"], 10)
+        if damage < 3:
+            print("Вы получили смертельный урон. Игра окончена.")
+            game_state["game_over"] = True
+        else:
+            print("Вам удалось уцелеть.")

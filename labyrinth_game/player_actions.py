@@ -1,5 +1,5 @@
 from labyrinth_game.constants import ROOMS
-
+from labyrinth_game.utils import random_event
 
 def get_input(prompt: str = "> ") -> str:
     try:
@@ -40,6 +40,7 @@ def move_player(game_state: dict, direction: str) -> None:
     from labyrinth_game.utils import describe_current_room
 
     describe_current_room(game_state)
+    random_event(game_state)
 
 
 def take_item(game_state: dict, item_name: str) -> None:
