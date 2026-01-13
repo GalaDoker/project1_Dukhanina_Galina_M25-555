@@ -12,6 +12,7 @@ from labyrinth_game.constants import (
 
 
 def show_map(game_state: dict) -> None:
+    """Отображает карту изученных комнат с их выходами."""
     print("Изученные комнаты:")
     for room in game_state["visited_rooms"]:
         exits = ", ".join(ROOMS[room]["exits"].keys())
@@ -19,6 +20,7 @@ def show_map(game_state: dict) -> None:
 
 
 def describe_current_room(game_state: dict) -> None:
+    """Выводит описание текущей комнаты, предметов и выходов."""
     room_name = game_state["current_room"]
     room = ROOMS[room_name]
 
@@ -38,6 +40,7 @@ def describe_current_room(game_state: dict) -> None:
 
 
 def solve_puzzle(game_state: dict) -> None:
+    """Позволяет игроку решить загадку в текущей комнате."""
     current_room = game_state["current_room"]
     room = ROOMS[current_room]
 
@@ -70,6 +73,7 @@ def solve_puzzle(game_state: dict) -> None:
 
 
 def attempt_open_treasure(game_state: dict) -> None:
+    """Попытка открыть сундук с сокровищами с помощью ключа или кода."""
     current_room = game_state["current_room"]
     room = ROOMS[current_room]
 
@@ -113,6 +117,7 @@ def attempt_open_treasure(game_state: dict) -> None:
 
 
 def show_help() -> None:
+    """Выводит список доступных команд и их алиасов."""
     print("Доступные команды:")
 
     aliases_by_command: dict[str, list[str]] = {}
@@ -132,6 +137,7 @@ def show_help() -> None:
 
 
 def pseudo_random(seed: int, modulo: int) -> int:
+    """Генерирует псевдослучайное число на основе seed и modulo."""
     if modulo <= 0:
         return 0
 
@@ -141,6 +147,7 @@ def pseudo_random(seed: int, modulo: int) -> int:
 
 
 def random_event(game_state: dict) -> None:
+    """Генерирует случайное событие во время перемещения игрока."""
     chance = pseudo_random(game_state["steps_taken"], EVENT_PROBABILITY)
     if chance != 0:
         return
@@ -168,6 +175,7 @@ def random_event(game_state: dict) -> None:
 
 
 def trigger_trap(game_state: dict) -> None:
+    """Активирует ловушку, нанося урон игроку или забирая предмет."""
     print("Ловушка активирована! Пол начал дрожать...")
 
     inventory = game_state["player_inventory"]

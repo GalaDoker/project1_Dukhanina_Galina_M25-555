@@ -6,6 +6,7 @@ from labyrinth_game.utils import (
 
 
 def get_input(prompt: str = "> ") -> str:
+    """Получает ввод от пользователя с обработкой исключений."""
     try:
         return input(prompt).strip().lower()
     except (KeyboardInterrupt, EOFError):
@@ -14,6 +15,7 @@ def get_input(prompt: str = "> ") -> str:
 
 
 def show_inventory(game_state: dict) -> None:
+    """Отображает содержимое инвентаря игрока."""
     inventory = game_state["player_inventory"]
 
     if not inventory:
@@ -26,6 +28,7 @@ def show_inventory(game_state: dict) -> None:
 
 
 def move_player(game_state: dict, direction: str) -> None:
+    """Перемещает игрока в указанном направлении, обновляя его позицию."""
     current_room = game_state["current_room"]
     exits = ROOMS[current_room]["exits"]
 
@@ -53,6 +56,7 @@ def move_player(game_state: dict, direction: str) -> None:
 
 
 def take_item(game_state: dict, item_name: str) -> None:
+    """Добавляет предмет из текущей комнаты в инвентарь игрока."""
     current_room = game_state["current_room"]
     room_items = ROOMS[current_room]["items"]
 
@@ -71,6 +75,7 @@ def take_item(game_state: dict, item_name: str) -> None:
 
 
 def use_item(game_state: dict, item_name: str) -> None:
+    """Использует предмет из инвентаря игрока."""
     inventory = game_state["player_inventory"]
 
     if item_name not in inventory:

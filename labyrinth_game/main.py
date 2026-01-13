@@ -18,6 +18,7 @@ from labyrinth_game.utils import (
 
 
 def process_command(game_state: dict, command: str) -> None:
+    """Обрабатывает команду игрока и вызывает соответствующую функцию."""
     command = command.strip().lower()
 
     if command in COMMAND_ALIASES:
@@ -78,6 +79,7 @@ def process_command(game_state: dict, command: str) -> None:
 
 
 def main() -> None:
+    """Точка входа в игру. Инициализирует игровое состояние и запускает игровой цикл."""
     game_state = {
         "player_inventory": [],
         "current_room": "entrance",
