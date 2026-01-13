@@ -48,6 +48,7 @@ def move_player(game_state: dict, direction: str) -> None:
             return
 
     game_state["current_room"] = new_room
+    game_state["visited_rooms"].add(new_room)
     game_state["steps_taken"] += 1
 
     describe_current_room(game_state)
