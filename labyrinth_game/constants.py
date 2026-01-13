@@ -2,8 +2,7 @@
 
 ROOMS = {
     "entrance": {
-        "description": "Вы стоите у входа в древний лабиринт."
-        "Воздух холодный, впереди темно.",
+        "description": "Вы стоите у входа в древний лабиринт. Воздух холодный, впереди темно.",
         "exits": {"north": "hall"},
         "items": ["torch"],
         "puzzle": None,
@@ -29,6 +28,12 @@ ROOMS = {
         "exits": {"south": "library"},
         "items": [],
         "puzzle": None,
+    },
+    "treasure_room": {
+        "description": "Комната сокровищ! В центре стоит большой сундук.",
+        "exits": {"south": "library"},
+        "items": ["treasure_chest"],
+        "puzzle": ("Подсказка: код состоит из 4 цифр, сумма которых равна 10", "1234"),
     },
 }
 
