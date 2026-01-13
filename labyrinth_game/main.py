@@ -21,16 +21,15 @@ def process_command(game_state: dict, command: str) -> None:
     """Обрабатывает команду игрока и вызывает соответствующую функцию."""
     command = command.strip().lower()
 
+    if not command:
+       return
+
     if command in COMMAND_ALIASES:
-        command = COMMAND_ALIASES[command]
+       command = COMMAND_ALIASES[command]
 
-    parts = command.split()
-
-    if not parts:
-        return
-
+    parts = command.split(maxsplit=1)
     action = parts[0]
-    argument = parts[1] if len(parts) > 1 else None
+    argument = parts[1] if len(parts) == 2 else None
 
     match action:
         case "look":
@@ -66,9 +65,9 @@ def process_command(game_state: dict, command: str) -> None:
         case "solve":
             current_room = game_state["current_room"]
             if current_room == "treasure_room":
-                attempt_open_treasure(game_state)
+               attempt_open_treasure(game_state)
             else:
-                solve_puzzle(game_state)
+               solve_puzzle(game_state)
 
         case "quit" | "exit":
             print("Спасибо за игру!")

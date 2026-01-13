@@ -17,13 +17,13 @@ ROOMS = {
         "puzzle": {
             "question": "Сколько будет дважды два?",
             "answers": ["4", "четыре"],
-            "reward": "Бронзовый ключ",
+            "reward": "Бронзовый_ключ",
         },
     },
     "library": {
         "description": "Пыльная библиотека с древними книгами и свитками.",
         "exits": {"west": "hall", "north": "treasure_room"},
-        "items": ["Древняя книга"],
+        "items": ["Древняя_книга"],
         "puzzle": None,
     },
     "trap_room": {
@@ -44,8 +44,8 @@ ROOMS = {
 COMMANDS = {
     "look": "Осмотреть текущую комнату",
     "go": "Перейти в другую комнату: go <direction>",
-    "take": "Поднять предмет: take <item>",
-    "use": "Использовать предмет: use <item>",
+    "take": "Поднять предмет: take <items>, <reward>",
+    "use": "Использовать предмет: use <items>, <reward>",
     "inventory": "Показать инвентарь",
     "solve": "Решить загадку в комнате",
     "map": "Показать изученные комнаты",
