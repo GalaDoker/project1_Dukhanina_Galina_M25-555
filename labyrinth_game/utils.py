@@ -3,6 +3,10 @@ import math
 from labyrinth_game.constants import (
     COMMAND_ALIASES,
     COMMANDS,
+    DAMAGE_RANGE,
+    EVENT_PROBABILITY,
+    EVENT_TYPES_COUNT,
+    LETHAL_DAMAGE_THRESHOLD,
     ROOMS,
 )
 
@@ -137,11 +141,11 @@ def pseudo_random(seed: int, modulo: int) -> int:
 
 
 def random_event(game_state: dict) -> None:
-    chance = pseudo_random(game_state["steps_taken"], 10)
+    chance = pseudo_random(game_state["steps_taken"], EVENT_PROBABILITY)
     if chance != 0:
         return
 
-    event_type = pseudo_random(game_state["steps_taken"], 3)
+    event_type = pseudo_random(game_state["steps_taken"], EVENT_TYPES_COUNT)
     current_room = game_state["current_room"]
     room = ROOMS[current_room]
 
@@ -173,8 +177,8 @@ def trigger_trap(game_state: dict) -> None:
         lost_item = inventory.pop(index)
         print(f"Вы потеряли предмет: {lost_item}")
     else:
-        damage = pseudo_random(game_state["steps_taken"], 10)
-        if damage < 3:
+        damage = pseudo_random(game_state["steps_taken"], DAMAGE_RANGE)
+        if damage < LETHAL_DAMAGE_THRESHOLD:
             print("Вы получили смертельный урон. Игра окончена.")
             game_state["game_over"] = True
         else:

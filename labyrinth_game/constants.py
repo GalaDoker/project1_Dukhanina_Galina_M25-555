@@ -64,3 +64,9 @@ COMMAND_ALIASES = {
     "q": "quit",
     "l": "look",
 }
+
+# Константы для игровой механики
+EVENT_PROBABILITY = 10  # Вероятность случайного события (1 из 10)
+EVENT_TYPES_COUNT = 3  # Количество типов случайных событий
+DAMAGE_RANGE = 10  # Диапазон урона от ловушки (0-9)
+LETHAL_DAMAGE_THRESHOLD = 3  # Порог смертельного урона
