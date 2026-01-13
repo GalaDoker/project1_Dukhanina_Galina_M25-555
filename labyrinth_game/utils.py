@@ -1,12 +1,18 @@
-from labyrinth_game.constants import ROOMS
-from labyrinth_game.constants import COMMANDS, COMMAND_ALIASES
 import math
+
+from labyrinth_game.constants import (
+    COMMAND_ALIASES,
+    COMMANDS,
+    ROOMS,
+)
+
 
 def show_map(game_state: dict) -> None:
     print("Изученные комнаты:")
     for room in game_state["visited_rooms"]:
         exits = ", ".join(ROOMS[room]["exits"].keys())
         print(f"- {room} (выходы: {exits})")
+
 
 def describe_current_room(game_state: dict) -> None:
     room_name = game_state["current_room"]
@@ -59,7 +65,6 @@ def solve_puzzle(game_state: dict) -> None:
             trigger_trap(game_state)
 
 
-
 def attempt_open_treasure(game_state: dict) -> None:
     current_room = game_state["current_room"]
     room = ROOMS[current_room]
@@ -77,9 +82,11 @@ def attempt_open_treasure(game_state: dict) -> None:
         game_state["game_over"] = True
         return
 
-    choice = input(
-        "Сундук заперт. Хотите попробовать ввести код? (да/нет): "
-    ).strip().lower()
+    choice = (
+        input("Сундук заперт. Хотите попробовать ввести код? (да/нет): ")
+        .strip()
+        .lower()
+    )
 
     if choice != "да":
         print("Вы отступаете от сундука.")
@@ -119,6 +126,7 @@ def show_help() -> None:
 
         print(f"- {command}{alias_text}: {description}")
 
+
 def pseudo_random(seed: int, modulo: int) -> int:
     if modulo <= 0:
         return 0
@@ -126,6 +134,7 @@ def pseudo_random(seed: int, modulo: int) -> int:
     x = math.sin(seed * 12.9898) * 43758.5453
     fractional_part = x - math.floor(x)
     return int(fractional_part * modulo)
+
 
 def random_event(game_state: dict) -> None:
     chance = pseudo_random(game_state["steps_taken"], 10)
@@ -146,9 +155,13 @@ def random_event(game_state: dict) -> None:
             print("Вы сжимаете меч, и существо отступает.")
 
     elif event_type == 2:
-        if current_room == "trap_room" and "torch" not in game_state["player_inventory"]:
+        if (
+            current_room == "trap_room"
+            and "torch" not in game_state["player_inventory"]
+        ):
             print("Вы не заметили опасность в темноте!")
             trigger_trap(game_state)
+
 
 def trigger_trap(game_state: dict) -> None:
     print("Ловушка активирована! Пол начал дрожать...")

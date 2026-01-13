@@ -2,12 +2,12 @@
 
 ROOMS = {
     "entrance": {
-        "description": "Вы стоите у входа в древний лабиринт. Воздух холодный, впереди темно.",
+        "description": "Вы стоите у входа в древний лабиринт."
+        "Воздух холодный, впереди темно.",
         "exits": {"north": "hall"},
         "items": ["torch"],
         "puzzle": None,
     },
-
     "hall": {
         "description": "Большой зал с высоким потолком. Шаги гулко отдаются от стен.",
         "exits": {"south": "entrance", "east": "library"},
@@ -15,17 +15,15 @@ ROOMS = {
         "puzzle": {
             "question": "Сколько будет дважды два?",
             "answers": ["4", "четыре"],
-            "reward": "bronze_key",
+            "reward": "Бронзовый ключ",
         },
     },
-
     "library": {
         "description": "Пыльная библиотека с древними книгами и свитками.",
-        "exits": {"west": "hall", "north": "trap_room"},
-        "items": ["ancient_book"],
+        "exits": {"west": "hall", "north": "treasure_room"},
+        "items": ["Древняя книга"],
         "puzzle": None,
     },
-
     "trap_room": {
         "description": "Комната с подозрительным полом. Кажется, здесь ловушка.",
         "exits": {"south": "library"},
@@ -58,4 +56,3 @@ COMMAND_ALIASES = {
     "q": "quit",
     "l": "look",
 }
-

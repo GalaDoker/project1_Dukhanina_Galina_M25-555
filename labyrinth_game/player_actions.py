@@ -1,5 +1,9 @@
 from labyrinth_game.constants import ROOMS
-from labyrinth_game.utils import describe_current_room, random_event
+from labyrinth_game.utils import (
+    describe_current_room,
+    random_event,
+)
+
 
 def get_input(prompt: str = "> ") -> str:
     try:
@@ -33,7 +37,9 @@ def move_player(game_state: dict, direction: str) -> None:
 
     if new_room == "treasure_room":
         if "rusty_key" in game_state["player_inventory"]:
-            print("Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ.")
+            print(
+                "Вы используете найденный ключ,чтобы открыть путь в комнату сокровищ."
+            )
         else:
             print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
             return
@@ -44,7 +50,6 @@ def move_player(game_state: dict, direction: str) -> None:
     describe_current_room(game_state)
 
     random_event(game_state)
-
 
 
 def take_item(game_state: dict, item_name: str) -> None:
