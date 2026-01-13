@@ -49,6 +49,10 @@ def solve_puzzle(game_state: dict) -> None:
         print("Загадок здесь нет.")
         return
 
+    if not isinstance(puzzle, dict):
+        print("Эта загадка требует другого подхода.")
+        return
+
     print(puzzle["question"])
     user_answer = input("Ваш ответ: ").strip().lower()
 
